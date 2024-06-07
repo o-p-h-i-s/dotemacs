@@ -1,0 +1,8 @@
+(setq frame-inhibit-implied-resize t)
+(push '(menu-bar-lines . nil) default-frame-alist)
+(push '(tool-bar-lines . nil) default-frame-alist)
+(push '(scroll-bar-mode . nil) default-frame-alist)
+(push '(blink-cursor-mode . nil) default-frame-alist)
+(push '(column-number-mode . nil) default-frame-alist)
+(push '(vertical-scroll-bars . nil) default-frame-alist)
+(push '(undecorated . t) default-frame-alist)
