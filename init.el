@@ -30,7 +30,7 @@
   :doc "settings"
   :init
   (load-theme 'wombat t)
-  :bind
+  :bind*
   (("C-h" . delete-backward-char)
    ("C-?" . help-for-help))
   :pre-push
@@ -62,11 +62,11 @@
 
 (leaf free-keys :ensure t)
 
-(leaf ddskk
-  :ensure t
+(leaf org
+  :mode "\\.org\\'"
   :bind
-  (("C-x C-y" . skk-mode)
-   ("C-x y" . skk-auto-fill-mode))
-  :custom
-  ((default-input-method . "japanese-skk")
-   (skk-large-jisyo . "~/.emacs.d/skk-get-jisyo/SKK-JISYO.L")))
+  (("C-c l" . org-store-link)
+   ("C-c c" . org-capture)
+   ("C-c a" . org-agenda)
+   ("C-c b" . org-iswitchb)))
+
