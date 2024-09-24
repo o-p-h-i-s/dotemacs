@@ -1,5 +1,21 @@
-#+begin_src emacs-lisp :tangle init.el
-#+end_src
+* Emacsの設定
+** Emacsの余計な枠を取る
 #+begin_src emacs-lisp :tangle early-init.el
 (push '(undecorated . t) default-frame-alist)
+#+end_src
+** 編集前のファイルをバックアップとして残さない
+nilのとき生成しない。作成先を変更するときは、(対象 . 作成先)のコンスセルのリストを
+backup-directory-alistに格納する。
+#+begin_src emacs-lisp :tangle init.el
+  (setq make-backup-files nil)
+#+end_src
+** 自動保存リストファイルを生成しない
+パスを指定することでリストファイルの生成先を変更できる。
+#+begin_src emacs-lisp :tangle init.el
+  (setq auto-save-list-file-prefix nil)
+#+end_src
+** ロックファイルを生成しない
+同じファイルを同時に編集しないためのものらしい。一人で使うので不要。
+#+begin_src emacs-lisp :tangle init.el
+  (setq create-lockfiles nil)
 #+end_src
