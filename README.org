@@ -1,0 +1,5 @@
+#+begin_src emacs-lisp :tangle init.el
+#+end_src
+#+begin_src emacs-lisp :tangle early-init.el
+(push '(undecorated . t) default-frame-alist)
+#+end_src
