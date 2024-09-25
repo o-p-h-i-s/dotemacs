@@ -50,5 +50,13 @@ backup-directory-alistに格納する。
 *** ステータスライン
 **** 行番号表示
 #+begin_src emacs-lisp :tangle init.el
-  (setq column-number-mode t)
+  (column-number-mode t)
+#+end_src
+*** 行番号の表示
+#+begin_src emacs-lisp :tangle init.el
+  (global-display-line-numbers-mode t)
+#+end_src
+*** 括弧の補完
+#+begin_src emacs-lisp :tangle init.el
+  (electric-pair-mode t)
 #+end_src
