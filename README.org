@@ -36,3 +36,19 @@ backup-directory-alistに格納する。
 #+begin_src emacs-lisp :tangle init.el
   (scroll-bar-mode -1)
 #+end_src
+*** テーマの設定
+#+begin_src emacs-lisp :tangle init.el
+  (load-theme 'wombat t)
+#+end_src
+*** フォントの設定
+#+begin_src emacs-lisp :tangle init.el
+  (setq default-frame-alist
+	(append (list
+		 '(font . "CaskaydiaCove NFM-13"))
+		default-frame-alist))
+#+end_src
+*** ステータスライン
+**** 行番号表示
+#+begin_src emacs-lisp :tangle init.el
+  (setq column-number-mode t)
+#+end_src
