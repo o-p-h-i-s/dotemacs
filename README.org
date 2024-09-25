@@ -19,3 +19,20 @@ backup-directory-alistに格納する。
 #+begin_src emacs-lisp :tangle init.el
   (setq create-lockfiles nil)
 #+end_src
+** Emacsの見た目の設定
+*** 起動メッセージを表示しない
+#+begin_src emacs-lisp :tangle init.el
+  (setq inhibit-startup-message t)
+#+end_src
+*** メニューバーの非表示
+#+begin_src emacs-lisp :tangle init.el
+  (menu-bar-mode -1)
+#+end_src
+*** ツールバーの非表示
+#+begin_src emacs-lisp :tangle init.el
+  (tool-bar-mode -1)
+#+end_src
+*** スクロールバー非表示
+#+begin_src emacs-lisp :tangle init.el
+  (scroll-bar-mode -1)
+#+end_src
