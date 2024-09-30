@@ -3,18 +3,25 @@
 #+begin_src emacs-lisp :tangle early-init.el
 (push '(undecorated . t) default-frame-alist)
 #+end_src
-** 編集前のファイルをバックアップとして残さない
+** 自動作成されるファイル群
+| 種類                | 例           | 要否    |
+|--------------------+-------------+--------|
+| バックアップファイル  | hoge~       | 作らない |
+| 自動保存ファイル      | #hoge#      | 作る    |
+| 自動保存リストファイル | .saves-hoge | 作らない |
+| ロックファイル       | .#hoge      | 作らない |
+*** 編集前のファイルをバックアップとして残さない
 nilのとき生成しない。作成先を変更するときは、(対象 . 作成先)のコンスセルのリストを
 backup-directory-alistに格納する。
 #+begin_src emacs-lisp :tangle init.el
   (setq make-backup-files nil)
 #+end_src
-** 自動保存リストファイルを生成しない
+*** 自動保存リストファイルを生成しない
 パスを指定することでリストファイルの生成先を変更できる。
 #+begin_src emacs-lisp :tangle init.el
   (setq auto-save-list-file-prefix nil)
 #+end_src
-** ロックファイルを生成しない
+*** ロックファイルを生成しない
 同じファイルを同時に編集しないためのものらしい。一人で使うので不要。
 #+begin_src emacs-lisp :tangle init.el
   (setq create-lockfiles nil)
