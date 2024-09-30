@@ -61,7 +61,11 @@ backup-directory-alistに格納する。
   (electric-pair-mode t)
 #+end_src
 *** キーバインド
-C-
+| key | function             |
+|-----+----------------------|
+| C-h | delete-backward-char |
+| C-? | help-for-help        |
 #+begin_src emacs-lisp :tangle init.el
   (define-key key-translation-map [?\C-h] [?\C-?])
+  (global-set-key (kbd "C-?") 'help-for-help)
 #+end_src
