@@ -42,10 +42,10 @@ backup-directory-alistに格納する。
 #+end_src
 *** フォントの設定
 #+begin_src emacs-lisp :tangle init.el
-  (setq default-frame-alist
-	(append (list
-		 '(font . "CaskaydiaCove NFM-13"))
-		default-frame-alist))
+  (set-language-environment "English")
+  (set-face-attribute 'default nil :family "CaskaydiaCove NFM" :height 135)
+  (require 'org)
+  (set-face-attribute 'org-table nil :family "Cascadia Next JP" :height 135)
 #+end_src
 *** ステータスライン
 **** 行番号表示
@@ -59,4 +59,9 @@ backup-directory-alistに格納する。
 *** 括弧の補完
 #+begin_src emacs-lisp :tangle init.el
   (electric-pair-mode t)
+#+end_src
+*** キーバインド
+C-
+#+begin_src emacs-lisp :tangle init.el
+  (define-key key-translation-map [?\C-h] [?\C-?])
 #+end_src
