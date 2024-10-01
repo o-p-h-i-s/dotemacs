@@ -1,3 +1,4 @@
+#+STARTUP: content
 * Emacsの設定
 ** Leaf
 #+begin_src emacs-lisp :tangle init.el
@@ -15,11 +16,11 @@
     (unless (package-installed-p 'leaf)
       (package-refresh-contents)
       (package-install 'leaf)))
-  (provide 'init)
 #+end_src
 ** Emacsの余計な枠を取る
 #+begin_src emacs-lisp :tangle early-init.el
-(push '(undecorated . t) default-frame-alist)
+  (push '(undecorated . t) default-frame-alist)
+  (provide 'early-init)
 #+end_src
 ** 自動作成されるファイル群
 | 種類                | 例           | 要否    |
@@ -109,4 +110,8 @@ backup-directory-alistに格納する。
       (load "~/.emacs.d/init.elc")
       (unless (null (get-buffer "*compilation*"))
 	(other-window 1))))
+#+end_src
+** <init.el> ends here
+#+begin_src emacs-lisp :tangle init.el
+  (provide 'init)
 #+end_src
