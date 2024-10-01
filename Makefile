@@ -12,4 +12,4 @@ init.el: README.org
 			(org-babel-tangle-file \"$<\" \"$@\" \"emacs-lisp\"))"
 
 clean:
-	rm -rf *.el *.elc auto-save-list
+	rm -rf *.el *.elc auto-save-list eln-cache elpa
