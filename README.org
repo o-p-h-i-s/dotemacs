@@ -81,7 +81,6 @@ backup-directory-alistに格納する。
 #+begin_src emacs-lisp :tangle init.el
   (setq help-window-select t)
 #+end_src
-
 ** 関数
 .emacs.d内でmakeしてinit.elcを読み込む関数
 #+begin_src emacs-lisp :tangle init.el
