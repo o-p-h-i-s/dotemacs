@@ -76,6 +76,12 @@ backup-directory-alistに格納する。
   (define-key key-translation-map [?\C-h] [?\C-?])
   (global-set-key (kbd "C-?") 'help-for-help)
 #+end_src
+** 挙動
+*** ヘルプウィンドウに自動でフォーカス
+#+begin_src emacs-lisp :tangle init.el
+  (setq help-window-select t)
+#+end_src
+
 ** 関数
 .emacs.d内でmakeしてinit.elcを読み込む関数
 #+begin_src emacs-lisp :tangle init.el
@@ -83,5 +89,7 @@ backup-directory-alistに格納する。
     (interactive)
     (let ((default-directory "~/.emacs.d"))
       (compile "make")
-      (load "~/.emacs.d/init.elc")))
+      (load "~/.emacs.d/init.elc")
+      (unless (null (get-buffer "*compilation*"))
+	(other-window 1))))
 #+end_src
