@@ -76,10 +76,11 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
      ;; skk tutorial
      (skk-tut-file . "/usr/share/skk/SKK.tut")
      ;; using skk with input method
-     (default-input-method . "japanese-skk"))
-    :config
-    (leaf skk-setup
-      :require))
+     (default-input-method . "japanese-skk")))
+#+end_src
+*** free-keys
+#+begin_src emacs-lisp :tangle init.el
+  (leaf free-keys :ensure t)
 #+end_src
 *** custom-set-*を捨てる
 #+begin_src emacs-lisp :tangle init.el
