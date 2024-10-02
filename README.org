@@ -61,6 +61,26 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
   (leaf magit
     :ensure t)
 #+end_src
+*** ddskk
+#+begin_src emacs-lisp :tangle init.el
+  (leaf ddskk
+    :ensure t
+    :bind
+    (("C-x C-y" . skk-mode)
+     ("C-x y" . skk-auto-fill-mode))
+    :custom
+    (;; skk directory
+     (skk-user-directory . "~/ddskk")
+     ;; skk dict
+     (skk-large-jisyo . "/usr/share/skk/SKK-JISYO.L")
+     ;; skk tutorial
+     (skk-tut-file . "/usr/share/skk/SKK.tut")
+     ;; using skk with input method
+     (default-input-method . "japanese-skk"))
+    :config
+    (leaf skk-setup
+      :require))
+#+end_src
 *** custom-set-*を捨てる
 #+begin_src emacs-lisp :tangle init.el
   (leaf cus-edit
