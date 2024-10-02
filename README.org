@@ -58,8 +58,7 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
 #+end_src
 *** magit
 #+begin_src emacs-lisp :tangle init.el
-  (leaf magit
-    :ensure t)
+  (leaf magit :ensure t)
 #+end_src
 *** ddskk
 #+begin_src emacs-lisp :tangle init.el
