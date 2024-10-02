@@ -1,6 +1,33 @@
 #+STARTUP: content
 * Emacsの設定
-** Leaf
+** early-init.el
+*** Emacsの余計な枠を取る
+#+begin_src emacs-lisp :tangle early-init.el
+  (push '(undecorated . t) default-frame-alist)
+#+end_src
+*** Emacsの画面を広くする
+#+begin_src emacs-lisp :tangle early-init.el
+  (setq inhibit-startup-message t)
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+#+end_src
+*** Emacsの初期位置、サイズ
+#+begin_src emacs-lisp :tangle early-init.el
+  (push '(top . 1) default-frame-alist)
+  (push '(left . 0) default-frame-alist)
+  (push '(width . 86) default-frame-alist)
+  (push '(height . 46) default-frame-alist)
+#+end_src
+*** early-init.el ends here
+#+begin_src emacs-lisp :tangle early-init.el
+  (provide 'early-init)
+#+end_src
+** init.el
+パッケージはleaf.elを用いて管理する。
+README.orgからMakefileでinit.elとearly-init.elを作成してコンパイルする。
+#⁠+begin_src から #+end_src まで囲まれた範囲がinit.el,early-init.elにtangle(抜き出)される。
+*** Leaf
 #+begin_src emacs-lisp :tangle init.el
   (eval-and-compile
     (when (or load-file-name byte-compile-current-file)
@@ -17,101 +44,85 @@
       (package-refresh-contents)
       (package-install 'leaf)))
 #+end_src
-** Emacsの余計な枠を取る
-#+begin_src emacs-lisp :tangle early-init.el
-  (push '(undecorated . t) default-frame-alist)
-  (provide 'early-init)
+*** Org
+#+begin_src emacs-lisp :tangle init.el
+  (leaf org
+    :require t
+    :custom
+    (org-src-window-setup 'current-window)
+    :config
+    (set-face-attribute 'org-table nil :family "Cascadia Next JP" :height 135))
 #+end_src
-** 自動作成されるファイル群
+*** custom-set-*を捨てる
+#+begin_src emacs-lisp :tangle init.el
+  (leaf cus-edit
+    :doc "tools for customizing Emacs and Lisp packages"
+    :tag "builtin" "faces" "help"
+    :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
+#+end_src
+*** 自動作成されるファイル群
 | 種類                | 例           | 要否    |
 |--------------------+-------------+--------|
 | バックアップファイル  | hoge~       | 作らない |
 | 自動保存ファイル      | #hoge#      | 作る    |
 | 自動保存リストファイル | .saves-hoge | 作らない |
 | ロックファイル       | .#hoge      | 作らない |
-*** 編集前のファイルをバックアップとして残さない
-nilのとき生成しない。作成先を変更するときは、(対象 . 作成先)のコンスセルのリストを
-backup-directory-alistに格納する。
 #+begin_src emacs-lisp :tangle init.el
-  (setq make-backup-files nil)
+  (leaf auto-generate-files
+    :custom
+    `(;; 編集前のファイルをバックアップとして残さない
+      (make-backup-files . nil)
+      ;; 自動保存リストファイルを生成しない
+      (auto-save-list-file-prefix . nil)
+      ;; ロックファイルを生成しない
+      (create-lockfiles . nil)))
 #+end_src
-*** 自動保存リストファイルを生成しない
-パスを指定することでリストファイルの生成先を変更できる。
+*** Emacsの見た目の設定
 #+begin_src emacs-lisp :tangle init.el
-  (setq auto-save-list-file-prefix nil)
+  (leaf cus-face
+    :init
+    ;; テーマの設定
+    (load-theme 'wombat t)
+    :custom
+    `(;; 起動メッセージを表示しない
+      (inhibit-startup-message . t)
+      ;; フォントの設定
+      (set-language-environment . "English")
+      ;; ステータスライン
+      (column-number-mode . t)
+      ;; 括弧の補完
+      (electric-pair-mode . t)
+      ;; ヘルプウィンドウに自動でフォーカス
+      (help-window-select . t))
+    ;; キーバインド
+    :config
+    (define-key key-translation-map [?\C-h] [?\C-?])
+    (global-set-key (kbd "C-?") 'help-for-help)
+    (set-face-attribute 'default nil :family "CaskaydiaCove NFM" :height 135)
+    :global-minor-mode
+    ;; 行番号の表示
+    (global-display-line-numbers-mode))
+
 #+end_src
-*** ロックファイルを生成しない
-同じファイルを同時に編集しないためのものらしい。一人で使うので不要。
-#+begin_src emacs-lisp :tangle init.el
-  (setq create-lockfiles nil)
-#+end_src
-** Emacsの見た目の設定
-*** 起動メッセージを表示しない
-#+begin_src emacs-lisp :tangle init.el
-  (setq inhibit-startup-message t)
-#+end_src
-*** メニューバーの非表示
-#+begin_src emacs-lisp :tangle init.el
-  (menu-bar-mode -1)
-#+end_src
-*** ツールバーの非表示
-#+begin_src emacs-lisp :tangle init.el
-  (tool-bar-mode -1)
-#+end_src
-*** スクロールバー非表示
-#+begin_src emacs-lisp :tangle init.el
-  (scroll-bar-mode -1)
-#+end_src
-*** テーマの設定
-#+begin_src emacs-lisp :tangle init.el
-  (load-theme 'wombat t)
-#+end_src
-*** フォントの設定
-#+begin_src emacs-lisp :tangle init.el
-  (set-language-environment "English")
-  (set-face-attribute 'default nil :family "CaskaydiaCove NFM" :height 135)
-  (require 'org)
-  (set-face-attribute 'org-table nil :family "Cascadia Next JP" :height 135)
-#+end_src
-*** ステータスライン
-**** 行番号表示
-#+begin_src emacs-lisp :tangle init.el
-  (column-number-mode t)
-#+end_src
-*** 行番号の表示
-#+begin_src emacs-lisp :tangle init.el
-  (global-display-line-numbers-mode t)
-#+end_src
-*** 括弧の補完
-#+begin_src emacs-lisp :tangle init.el
-  (electric-pair-mode t)
-#+end_src
-*** キーバインド
 | key | function             |
 |-----+----------------------|
 | C-h | delete-backward-char |
 | C-? | help-for-help        |
-#+begin_src emacs-lisp :tangle init.el
-  (define-key key-translation-map [?\C-h] [?\C-?])
-  (global-set-key (kbd "C-?") 'help-for-help)
-#+end_src
-** 挙動
-*** ヘルプウィンドウに自動でフォーカス
-#+begin_src emacs-lisp :tangle init.el
-  (setq help-window-select t)
-#+end_src
-** 関数
+*** 自作関数
 .emacs.d内でmakeしてinit.elcを読み込む関数
 #+begin_src emacs-lisp :tangle init.el
-  (defun update-init-file()
+  (leaf user-defined-function
+    :config
+    (defun update-init-file()
     (interactive)
     (let ((default-directory "~/.emacs.d"))
       (compile "make")
       (load "~/.emacs.d/init.elc")
       (unless (null (get-buffer "*compilation*"))
-	(other-window 1))))
+	(other-window 1)))))
+
 #+end_src
-** <init.el> ends here
+*** init.el ends here
 #+begin_src emacs-lisp :tangle init.el
   (provide 'init)
 #+end_src
