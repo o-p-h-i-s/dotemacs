@@ -78,6 +78,10 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
       (create-lockfiles . nil)))
 #+end_src
 *** Emacsの見た目の設定
+| key | 関数                  |
+|-----+----------------------|
+| C-h | delete-backward-char |
+| C-? | help-for-help        |
 #+begin_src emacs-lisp :tangle init.el
   (leaf cus-face
     :init
@@ -102,12 +106,7 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
     :global-minor-mode
     ;; 行番号の表示
     (global-display-line-numbers-mode))
-
 #+end_src
-| key | function             |
-|-----+----------------------|
-| C-h | delete-backward-char |
-| C-? | help-for-help        |
 *** 自作関数
 .emacs.d内でmakeしてinit.elcを読み込む関数
 #+begin_src emacs-lisp :tangle init.el
@@ -120,7 +119,6 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
       (load "~/.emacs.d/init.elc")
       (unless (null (get-buffer "*compilation*"))
 	(other-window 1)))))
-
 #+end_src
 *** init.el ends here
 #+begin_src emacs-lisp :tangle init.el
