@@ -19,6 +19,10 @@
   (push '(width . 105) default-frame-alist)
   (push '(height . 54) default-frame-alist)
 #+end_src
+*** (comp)warningの抑制
+#+begin_src emacs-lisp :tangle early-init.el
+  (custom-set-variables '(warning-suppress-types '((comp))))
+#+end_src
 *** early-init.el ends here
 #+begin_src emacs-lisp :tangle early-init.el
   (provide 'early-init)
@@ -50,7 +54,7 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
     :require t
     :defvar org-structure-template-alist
     :custom
-    (org-src-window-setup 'current-window)
+    (org-src-window-setup . 'current-window)
     :config
     (set-face-attribute 'org-table nil :family "Cascadia Next JP" :height 120)
     (add-to-list 'org-structure-template-alist '("i" . "src emacs-lisp :tangle init.el"))
@@ -125,7 +129,11 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
       ;; 括弧の補完
       (electric-pair-mode . t)
       ;; ヘルプウィンドウに自動でフォーカス
-      (help-window-select . t))
+      (help-window-select . t)
+      ;; 番号のズレを抑制
+      (display-line-numbers-width-start . t)
+      ;; auto-fill-width
+      (fill-column . 100))
     ;; キーバインド
     :config
     (define-key key-translation-map [?\C-h] [?\C-?])
@@ -133,7 +141,10 @@ README.orgからMakefileでinit.elとearly-init.elを作成してコンパイル
     (set-face-attribute 'default nil :family "CaskaydiaCove NFM" :height 120)
     :global-minor-mode
     ;; 行番号の表示
-    (global-display-line-numbers-mode))
+    (global-display-line-numbers-mode)
+    :hook
+    ;; text-modeでauto-fillする
+    (text-mode-hook . turn-on-auto-fill))
 #+end_src
 *** 自作関数
 .emacs.d内でmakeしてinit.elcを読み込む関数
